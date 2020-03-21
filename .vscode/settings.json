@@ -1,0 +1,22 @@
+{
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "editor.tabSize": 2,
+  "files.exclude": {
+    ".git": true,
+    "node_modules": true,
+    "dist": true
+  },
+
+  "todohighlight.isEnable": true,
+  "todohighlight.isCaseSensitive": true,
+
+  "cSpell.words": [
+    "region",
+    "endregion",
+    "entt",
+    "enttclass",
+    "Serializable",
+    "Validate"
+  ]
+}
