@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/ofzza/enTT-RxJS#readme",
   "dependencies": {
+    "entt": "git+https://github.com/ofzza/enTT.git#dev",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.4",
     "tslib": "^1.11.1"

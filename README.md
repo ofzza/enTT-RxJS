@@ -15,7 +15,41 @@ To start using ```enTT-RxJS``` in your project, simply install it from NPM by ru
 Usage of ```enTT-RxJS``` is nearly identical to [enTT](https://github.com/ofzza/enTT), so please read up on basic usage of [enTT](https://github.com/ofzza/enTT) first!
 Covered here will be only what is different from the base [enTT](https://github.com/ofzza/enTT) implementation ...
 
+### Cast accepts RxJS Observables
 
+If passed a RxJS Observable, cast will return a piped Observable which will map any resolved value to a cast instance, in line with how the base [enTT](https://github.com/ofzza/enTT) library works with Promises.
+
+<details><summary>EXAMPLE</summary>
+
+```ts
+  import { EnTT } from 'entt';
+  import { Subject } from 'rxjs';
+
+  class MyPersonClass extends EnTT {
+    constructor () { super(); super.entt(); }
+
+    public firstName = undefined as string;
+    public lastName = undefined as string;
+  }
+
+  const instance = new MyPersonClass();
+  instance.firstName = 'John';
+  instance.lastName = 'Doe';
+
+  const serialized = instance.serialize();
+  console.log(serialized);  // Outputs: { firstName: "John", lastName: "Doe" }
+
+  const observable = new Subject(),
+        castObservable = MyPersonClass.cast(observable, 'object', { Class: MyPersonClass });
+  castObservable.subscribe((value) => {
+    console.log(value instanceof MyPersonClass)     // Outputs: true
+    console.log(value.firstName);                   // Outputs: "John"
+    console.log(value.lastName);                    // Outputs: "Doe"
+  });
+  observable.next(serialized);
+  observable.complete();
+```
+</details>
 
 ---
 

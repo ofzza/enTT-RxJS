@@ -4,6 +4,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // Import dependencies
 const rxjs_1 = require("rxjs");
+const operators_1 = require("rxjs/operators");
 const entt_1 = require("entt");
 /**
  * Main, extensible EnTT class definition
@@ -27,11 +28,11 @@ class EnTT extends entt_1.EnTT {
         // Check if value is an Observable
         if (value instanceof rxjs_1.Observable) {
             // Pipe observable through a casting transformation
-            throw new Error('Not implemented!');
+            return value.pipe(operators_1.map(value => entt_1.EnTT.cast(value, type, { Class })));
         }
         else {
             // Cast value
-            entt_1.EnTT.cast(value, type, { Class });
+            return entt_1.EnTT.cast(value, type, { Class });
         }
     }
     /**

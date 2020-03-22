@@ -3,6 +3,7 @@
 
 // Import dependencies
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { EnTT as EnTTBase } from 'entt';
 
 /**
@@ -28,10 +29,10 @@ export class EnTT extends EnTTBase {
     // Check if value is an Observable
     if (value instanceof Observable) {
       // Pipe observable through a casting transformation
-      throw new Error('Not implemented!');
+      return value.pipe(map(value => EnTTBase.cast(value, type, { Class })));
     } else {
       // Cast value
-      EnTTBase.cast(value, type, { Class })
+      return EnTTBase.cast(value, type, { Class });
     }
   }
 

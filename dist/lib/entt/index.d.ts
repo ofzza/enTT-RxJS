@@ -18,7 +18,7 @@ export declare class EnTT extends EnTTBase {
      */
     static cast(value: any, type?: "object" | "json", { Class }?: {
         Class?: (new () => EnTT) | (new () => EnTT)[] | Record<any, new () => EnTT>;
-    }): void;
+    }): any;
     /**
      * Creates an extended instance of EnTT.
      */
