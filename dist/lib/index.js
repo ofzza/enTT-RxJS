@@ -8,4 +8,5 @@ tslib_1.__exportStar(require("entt"), exports);
 // Import and (re)export base class
 var entt_1 = require("./entt");
 exports.EnTT = entt_1.EnTT;
+exports.cast = entt_1.cast;
 //# sourceMappingURL=index.js.map

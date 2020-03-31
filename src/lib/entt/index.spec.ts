@@ -4,7 +4,7 @@
 // Import dependencies
 import { Subject } from 'rxjs';
 import { assert } from '../../tests.init'
-import { EnTT }  from '../../';
+import { EnTT, cast }  from '../../';
 
 // Test ...
 describe('class EnTT', () => {
@@ -26,25 +26,133 @@ describe('class EnTT', () => {
     assert(instance.revert);
   });
 
-  it('Casts Observables', () => {
-    const instance = new Test(),
-          observable = new Subject();
-    Test.cast(observable, 'object', { Class: Test })
-      .subscribe((value) => {
-        assert(value instanceof Test);
-      });
-    observable.next(instance.serialize());
+  describe('Casts Observable', () => {
+    it('Casts single Observable', () => {
+      const instance   = new Test(),
+            observable = new Subject(),
+            value      = instance.serialize();
+      Test.cast(observable, { Class: Test })
+        .subscribe((value) => {
+          assert(value instanceof Test);
+        });
+      observable.next(value);
+      observable.complete();
+    });
+
+    it('Casts Observable array', () => {
+      const instance   = new Test(),
+            observable = new Subject(),
+            value      = instance.serialize();
+      Test.cast(observable, { Class: [Test] })
+        .subscribe((value) => {
+          assert(value instanceof Array);
+          assert(value.length === 3);
+          assert(value[0] instanceof Test);
+        });
+      observable.next([value, value, value]);
+      observable.complete();
+    });
+
+    it('Casts Observable hashmap', () => {
+      const instance   = new Test(),
+            observable = new Subject(),
+            value      = instance.serialize();
+      Test.cast(observable, { Class: {Test} })
+        .subscribe((value) => {
+          assert(value instanceof Object);
+          assert(Object.values(value).length === 3);
+          assert(value.a instanceof Test);
+        });
+      observable.next({ a: value, b: value, c: value });
+      observable.complete();
+    });
   });
 
-  it('Casts Observables converted using .toPromise()', () => {
-    const instance = new Test(),
-          observable = new Subject();
-    Test.cast(observable.toPromise(), 'object', { Class: Test })
-      .then((value) => {
-        assert(value instanceof Test);
-      });
-    observable.next(instance.serialize());
-    observable.complete();
+  describe('Cast can be used in Observable.pipe', () => {
+    it('Casts single Observable', () => {
+      const instance   = new Test(),
+            observable = new Subject(),
+            value      = instance.serialize();
+      observable
+        .pipe(cast(Test))
+        .subscribe((value) => {
+          assert(value instanceof Test);
+        });
+      observable.next(value);
+      observable.complete();
+    });
+
+    it('Casts Observable array', () => {
+      const instance   = new Test(),
+            observable = new Subject(),
+            value      = instance.serialize();
+      observable
+        .pipe(cast([Test]))
+        .subscribe((value: any) => {
+          assert(value instanceof Array);
+          assert(value.length === 3);
+          assert(value[0] instanceof Test);
+        });
+      observable.next([value, value, value]);
+      observable.complete();
+    });
+
+    it('Casts Observable hashmap', () => {
+      const instance   = new Test(),
+            observable = new Subject(),
+            value      = instance.serialize();
+      observable
+        .pipe(cast({Test}))
+        .subscribe((value: any) => {
+          assert(value instanceof Object);
+          assert(Object.values(value).length === 3);
+          assert(value.a instanceof Test);
+        });
+      observable.next({ a: value, b: value, c: value });
+      observable.complete();
+    });
+  });
+
+  describe('Casts Observables converted using .toPromise()', () => {
+    it('Casts single Observable', () => {
+      const instance   = new Test(),
+            observable = new Subject(),
+            value      = instance.serialize();
+      Test.cast(observable.toPromise(), { Class: Test })
+        .then((value) => {
+          assert(value instanceof Test);
+        });
+      observable.next(value);
+      observable.complete();
+    });
+  
+    it('Casts Observable array', () => {
+      const instance   = new Test(),
+            observable = new Subject(),
+            value      = instance.serialize();
+      Test.cast(observable.toPromise(), { Class: [Test] })
+        .then((value) => {
+          assert(value instanceof Array);
+          assert(value.length === 3);
+          assert(value[0] instanceof Test);
+        });
+      observable.next([value, value, value]);
+      observable.complete();
+    });
+  
+    it('Casts Observable hashmap', () => {
+      const instance   = new Test(),
+            observable = new Subject(),
+            value      = instance.serialize();
+      Test.cast(observable.toPromise(), { Class: {Test} })
+        .then((value) => {
+          assert(value instanceof Object);
+          assert(Object.values(value).length === 3);
+          assert(value.a instanceof Test);
+        });
+        observable.next({ a: value, b: value, c: value });
+      observable.complete();
+    });
   });
 
 });

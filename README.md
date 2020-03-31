@@ -17,7 +17,7 @@ Covered here will be only what is different from the base [enTT](https://github.
 
 ### Cast accepts RxJS Observables
 
-If passed a RxJS Observable, cast will return a piped Observable which will map any resolved value to a cast instance, in line with how the base [enTT](https://github.com/ofzza/enTT) library works with Promises.
+If passed a RxJS Observable, cast will return a piped Observable which will map any resolved value to a cast instance, in line with how the base [enTT](https://github.com/ofzza/enTT) library works with Promises, like so:
 
 <details><summary>EXAMPLE</summary>
 
@@ -40,12 +40,49 @@ If passed a RxJS Observable, cast will return a piped Observable which will map 
   console.log(serialized);  // Outputs: { firstName: "John", lastName: "Doe" }
 
   const observable = new Subject(),
-        castObservable = MyPersonClass.cast(observable, 'object', { Class: MyPersonClass });
+        castObservable = MyPersonClass.cast(observable, { Class: MyPersonClass });
   castObservable.subscribe((value) => {
     console.log(value instanceof MyPersonClass)     // Outputs: true
     console.log(value.firstName);                   // Outputs: "John"
     console.log(value.lastName);                    // Outputs: "Doe"
   });
+  observable.next(serialized);
+  observable.complete();
+```
+</details>
+
+### Exposes RxJS "cast" operator to use with .pipe()
+
+To cast a value as an EnTT in an RxJS pipe user the `cast` operator, like so:
+
+<details><summary>EXAMPLE</summary>
+
+```ts
+  import { EnTT, cast } from 'entt';
+  import { Subject } from 'rxjs';
+
+  class MyPersonClass extends EnTT {
+    constructor () { super(); super.entt(); }
+
+    public firstName = undefined as string;
+    public lastName = undefined as string;
+  }
+
+  const instance = new MyPersonClass();
+  instance.firstName = 'John';
+  instance.lastName = 'Doe';
+
+  const serialized = instance.serialize();
+  console.log(serialized);  // Outputs: { firstName: "John", lastName: "Doe" }
+
+  const observable = new Subject();
+  observable
+    .pipe(cast(MyPersonClass))
+    .subscribe((value) => {
+      console.log(value instanceof MyPersonClass)     // Outputs: true
+      console.log(value.firstName);                   // Outputs: "John"
+      console.log(value.lastName);                    // Outputs: "Doe"
+    });
   observable.next(serialized);
   observable.complete();
 ```
