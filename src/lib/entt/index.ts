@@ -14,7 +14,7 @@ export class EnTT extends EnTTBase {
   /**
    * Casts a value of given type as an instance of a parent EnTT Class
    * @param value Value (or structure of values) being cast, or (alternatively) a Promise or Observable about to resolve such a value
-   * @param Class Casting target class, or structure:
+   * @param into Casting target class, or structure:
    * - MyEnTTClass, will cast value as instance of MyEnTTClass
    *    => new myEnTTClass()
    * - [MyEnTTClass], will cast value (assumed to be an array) as an array of instances of MyEnTTClass
@@ -24,17 +24,17 @@ export class EnTT extends EnTTBase {
    * @param type Type of value being cast
    * @returns Instance (or structure of instances) of the class with deserialized data, or (alternatively) a Promise or Observable about to resolve to such an instance
    */
-  public static cast (value, { Class = undefined as ((new() => EnTT) | (new() => EnTT)[] | Record<any, (new() => EnTT)>), type = 'object' as 'object'|'json' } = {}) {
+  public static cast (value, { into = undefined as ((new() => EnTT) | (new() => EnTT)[] | Record<any, (new() => EnTT)>), type = 'object' as 'object'|'json' } = {}) {
     // using @Serializable
     // Check if value is an Observable
     if (value instanceof Observable) {
       // Pipe observable through a casting transformation
       return value.pipe(map(value => {
-        return EnTTBase.cast.bind(this)(value, { Class, type });
+        return EnTTBase.cast.bind(this)(value, { into, type });
       }));
     } else {
       // Cast value
-      return EnTTBase.cast.bind(this)(value, { Class, type });
+      return EnTTBase.cast.bind(this)(value, { into, type });
     }
   }
 
@@ -47,7 +47,7 @@ export class EnTT extends EnTTBase {
 
 /**
  * RxJs operator casts value into an EnTT instance or structure
- * @param Class Casting target class, or structure:
+ * @param into Casting target class, or structure:
  * - MyEnTTClass, will cast value as instance of MyEnTTClass
  *    => new myEnTTClass()
  * - [MyEnTTClass], will cast value (assumed to be an array) as an array of instances of MyEnTTClass
@@ -57,8 +57,8 @@ export class EnTT extends EnTTBase {
  * @param type Type of value being cast
  * @returns Observable about to resolve cast instance or structure
  */
-export function cast <T extends EnTT> (Class: ((new() => T) | (new() => T)[] | Record<any, (new() => T)>), type = 'object' as 'object'|'json') {
+export function cast <T extends EnTT> (into: ((new() => T) | (new() => T)[] | Record<any, (new() => T)>), type = 'object' as 'object'|'json') {
   return function <T> (value: Observable<T>) {
-    return EnTT.cast(value, { Class, type });
+    return EnTT.cast(value, { into, type });
   };
 }

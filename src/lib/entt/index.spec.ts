@@ -31,7 +31,7 @@ describe('class EnTT', () => {
       const instance   = new Test(),
             observable = new Subject(),
             value      = instance.serialize();
-      Test.cast(observable, { Class: Test })
+      Test.cast(observable, { into: Test })
         .subscribe((value) => {
           assert(value instanceof Test);
         });
@@ -43,7 +43,7 @@ describe('class EnTT', () => {
       const instance   = new Test(),
             observable = new Subject(),
             value      = instance.serialize();
-      Test.cast(observable, { Class: [Test] })
+      Test.cast(observable, { into: [Test] })
         .subscribe((value) => {
           assert(value instanceof Array);
           assert(value.length === 3);
@@ -57,7 +57,7 @@ describe('class EnTT', () => {
       const instance   = new Test(),
             observable = new Subject(),
             value      = instance.serialize();
-      Test.cast(observable, { Class: {Test} })
+      Test.cast(observable, { into: {Test} })
         .subscribe((value) => {
           assert(value instanceof Object);
           assert(Object.values(value).length === 3);
@@ -118,7 +118,7 @@ describe('class EnTT', () => {
       const instance   = new Test(),
             observable = new Subject(),
             value      = instance.serialize();
-      Test.cast(observable.toPromise(), { Class: Test })
+      Test.cast(observable.toPromise(), { into: Test })
         .then((value) => {
           assert(value instanceof Test);
         });
@@ -130,7 +130,7 @@ describe('class EnTT', () => {
       const instance   = new Test(),
             observable = new Subject(),
             value      = instance.serialize();
-      Test.cast(observable.toPromise(), { Class: [Test] })
+      Test.cast(observable.toPromise(), { into: [Test] })
         .then((value) => {
           assert(value instanceof Array);
           assert(value.length === 3);
@@ -144,7 +144,7 @@ describe('class EnTT', () => {
       const instance   = new Test(),
             observable = new Subject(),
             value      = instance.serialize();
-      Test.cast(observable.toPromise(), { Class: {Test} })
+      Test.cast(observable.toPromise(), { into: {Test} })
         .then((value) => {
           assert(value instanceof Object);
           assert(Object.values(value).length === 3);

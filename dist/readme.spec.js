@@ -24,7 +24,7 @@ describe('README examples', () => {
                 instance.lastName = 'Doe';
                 const serialized = instance.serialize();
                 tests_init_1.assert(JSON.stringify(serialized) === JSON.stringify({ firstName: "John", lastName: "Doe" }));
-                const observable = new rxjs_1.Subject(), castObservable = MyPersonClass.cast(observable, { Class: MyPersonClass });
+                const observable = new rxjs_1.Subject(), castObservable = MyPersonClass.cast(observable, { into: MyPersonClass });
                 castObservable.subscribe((value) => {
                     tests_init_1.assert(value instanceof MyPersonClass);
                     tests_init_1.assert(value.firstName === 'John');

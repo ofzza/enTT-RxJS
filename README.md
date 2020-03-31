@@ -40,7 +40,7 @@ If passed a RxJS Observable, cast will return a piped Observable which will map 
   console.log(serialized);  // Outputs: { firstName: "John", lastName: "Doe" }
 
   const observable = new Subject(),
-        castObservable = MyPersonClass.cast(observable, { Class: MyPersonClass });
+        castObservable = MyPersonClass.cast(observable, { target: MyPersonClass });
   castObservable.subscribe((value) => {
     console.log(value instanceof MyPersonClass)     // Outputs: true
     console.log(value.firstName);                   // Outputs: "John"

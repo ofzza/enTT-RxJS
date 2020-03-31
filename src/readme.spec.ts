@@ -30,7 +30,7 @@ describe('README examples', () => {
         assert(JSON.stringify(serialized) === JSON.stringify({ firstName: "John", lastName: "Doe" }));
       
         const observable = new Subject(),
-              castObservable = MyPersonClass.cast(observable, { Class: MyPersonClass });
+              castObservable = MyPersonClass.cast(observable, { into: MyPersonClass });
         castObservable.subscribe((value) => {
           assert(value instanceof MyPersonClass);
           assert(value.firstName === 'John');
