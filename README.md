@@ -3,6 +3,14 @@ enTT RxJS
 
 ```enTT-RxJS``` is a RxJS compatible extension of [enTT](https://github.com/ofzza/enTT), read as "Entity" - an extensible TypeScript data-modeling solution with some of the typically required functionality, such as change-detection, easy import/export, composition/decomposition, data validation, etc., all available out of the box and easy to use.
 
+###### Table of contents:
+- [Get enTT](#get-entt-rxjs)
+- [Using enTT](#using-entt-rxjs)
+- [Contributing](#contributing)
+  - [Reporting Issues](#reporting-issues)
+  - [Contributing Code](#contributing-code)
+
+
 # Get enTT-RxJS
 
 To start using ```enTT-RxJS``` in your project, simply install it from NPM by running the following in your terminal:
@@ -10,7 +18,8 @@ To start using ```enTT-RxJS``` in your project, simply install it from NPM by ru
  > npm install entt-rxjs --save
  ```
 
-# Using enTT
+
+# Using enTT-RxJS
 
 Usage of ```enTT-RxJS``` is nearly identical to [enTT](https://github.com/ofzza/enTT), so please read up on basic usage of [enTT](https://github.com/ofzza/enTT) first!
 Covered here will be only what is different from the base [enTT](https://github.com/ofzza/enTT) implementation ...
@@ -88,8 +97,30 @@ To cast a value as an EnTT in an RxJS pipe user the `cast` operator, like so:
 ```
 </details>
 
----
+<!--
 
 TODO:
 
 - [ ] Add entt as a real npm package dependency
+
+
+-->
+
+# Contributing
+
+## Reporting Issues
+
+When reporting issues, please keep to provided templates.
+
+Before reporting issues, please read: [GitHub Work-Flow](https://github.com/ofzza/onboarding/blob/master/CONTRIBUTING/github.md)
+
+
+## Contributing Code
+
+For work-flow and general etiquette when contributing, please see:
+- [Git Source-Control Work-Flow](https://github.com/ofzza/onboarding/blob/master/CONTRIBUTING/git.md)
+- [GitHub Work-Flow](https://github.com/ofzza/onboarding/blob/master/CONTRIBUTING/github.md)
+
+Please accompany any work, fix or feature with their own issue, in it's own branch (see [Git Source-Control Work-Flow](https://github.com/ofzza/onboarding/blob/master/CONTRIBUTING/git.md) for branch naming conventions), and once done, request merge via pull request.
+
+When creating issues and PRs, please keep to provided templates.

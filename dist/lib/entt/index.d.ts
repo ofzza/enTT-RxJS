@@ -19,7 +19,7 @@ export declare class EnTT extends EnTTBase {
      */
     static cast(value: any, { into, type }?: {
         into?: (new () => EnTT) | (new () => EnTT)[] | Record<any, new () => EnTT>;
-        type?: "object" | "json";
+        type?: import("entt/dist/lib/decorators/serializable/internals")._rawDataType;
     }): any;
     /**
      * Creates an extended instance of EnTT.
@@ -38,4 +38,4 @@ export declare class EnTT extends EnTTBase {
  * @param type Type of value being cast
  * @returns Observable about to resolve cast instance or structure
  */
-export declare function cast<T extends EnTT>(into: ((new () => T) | (new () => T)[] | Record<any, (new () => T)>), type?: "object" | "json"): <T_1>(value: Observable<T_1>) => any;
+export declare function cast<T extends EnTT>(into: ((new () => T) | (new () => T)[] | Record<any, (new () => T)>), type?: import("entt/dist/lib/decorators/serializable/internals")._rawDataType): <T_1>(value: Observable<T_1>) => any;
