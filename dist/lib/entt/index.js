@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // Import dependencies
 const rxjs_1 = require("rxjs");
 const operators_1 = require("rxjs/operators");
-const entt_1 = require("entt");
+const entt_1 = require("@ofzza/entt");
 /**
  * Main, extensible EnTT class definition
  */

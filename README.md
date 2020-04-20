@@ -31,7 +31,7 @@ If passed a RxJS Observable, cast will return a piped Observable which will map 
 <details><summary>EXAMPLE</summary>
 
 ```ts
-  import { EnTT } from 'entt';
+  import { EnTT } from '@ofzza/entt-rxjs';
   import { Subject } from 'rxjs';
 
   class MyPersonClass extends EnTT {
@@ -67,7 +67,7 @@ To cast a value as an EnTT in an RxJS pipe user the `cast` operator, like so:
 <details><summary>EXAMPLE</summary>
 
 ```ts
-  import { EnTT, cast } from 'entt';
+  import { EnTT, cast } from '@ofzza/entt-rxjs';
   import { Subject } from 'rxjs';
 
   class MyPersonClass extends EnTT {

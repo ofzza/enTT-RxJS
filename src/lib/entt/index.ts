@@ -4,7 +4,7 @@
 // Import dependencies
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EnTT as EnTTBase } from 'entt';
+import { EnTT as EnTTBase } from '@ofzza/entt';
 
 /**
  * Main, extensible EnTT class definition
