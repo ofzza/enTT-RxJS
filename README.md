@@ -15,7 +15,7 @@ enTT RxJS
 
 To start using ```enTT-RxJS``` in your project, simply install it from NPM by running the following in your terminal:
  ```sh
- > npm install entt-rxjs --save
+ > npm install @ofzza/entt-rxjs --save
  ```
 
 
