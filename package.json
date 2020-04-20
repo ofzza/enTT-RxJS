@@ -1,6 +1,6 @@
 {
   "name": "@ofzza/entt-rxjs",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "RxJS compatible extension of enTT - a modular JS data-model base class, implementing typically used functionality",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
