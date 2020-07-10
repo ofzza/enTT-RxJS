@@ -9,10 +9,15 @@ const __1 = require("../../");
 // Test ...
 describe('class EnTT', () => {
     class Test extends __1.EnTT {
-        constructor() { super(); super.entt(); }
+        constructor() {
+            super();
+            super.entt();
+        }
     }
     it('Can initialize extended EnTT class', () => {
-        expect(() => { new Test(); }).not.toThrow();
+        expect(() => {
+            new Test();
+        }).not.toThrow();
     });
     it('Inherits all EnTT methods and properties', () => {
         const instance = new Test();
@@ -25,8 +30,7 @@ describe('class EnTT', () => {
     describe('Casts Observable', () => {
         it('Casts single Observable', () => {
             const instance = new Test(), observable = new rxjs_1.Subject(), value = instance.serialize();
-            Test.cast(observable, { into: Test })
-                .subscribe((value) => {
+            Test.cast(observable, { into: Test }).subscribe(value => {
                 tests_init_1.assert(value instanceof Test);
             });
             observable.next(value);
@@ -34,8 +38,7 @@ describe('class EnTT', () => {
         });
         it('Casts Observable array', () => {
             const instance = new Test(), observable = new rxjs_1.Subject(), value = instance.serialize();
-            Test.cast(observable, { into: [Test] })
-                .subscribe((value) => {
+            Test.cast(observable, { into: [Test] }).subscribe(value => {
                 tests_init_1.assert(value instanceof Array);
                 tests_init_1.assert(value.length === 3);
                 tests_init_1.assert(value[0] instanceof Test);
@@ -45,8 +48,7 @@ describe('class EnTT', () => {
         });
         it('Casts Observable hashmap', () => {
             const instance = new Test(), observable = new rxjs_1.Subject(), value = instance.serialize();
-            Test.cast(observable, { into: { Test } })
-                .subscribe((value) => {
+            Test.cast(observable, { into: { Test } }).subscribe(value => {
                 tests_init_1.assert(value instanceof Object);
                 tests_init_1.assert(Object.values(value).length === 3);
                 tests_init_1.assert(value.a instanceof Test);
@@ -58,9 +60,7 @@ describe('class EnTT', () => {
     describe('Cast can be used in Observable.pipe', () => {
         it('Casts single Observable', () => {
             const instance = new Test(), observable = new rxjs_1.Subject(), value = instance.serialize();
-            observable
-                .pipe(__1.cast(Test))
-                .subscribe((value) => {
+            observable.pipe(__1.cast(Test)).subscribe(value => {
                 tests_init_1.assert(value instanceof Test);
             });
             observable.next(value);
@@ -68,9 +68,7 @@ describe('class EnTT', () => {
         });
         it('Casts Observable array', () => {
             const instance = new Test(), observable = new rxjs_1.Subject(), value = instance.serialize();
-            observable
-                .pipe(__1.cast([Test]))
-                .subscribe((value) => {
+            observable.pipe(__1.cast([Test])).subscribe((value) => {
                 tests_init_1.assert(value instanceof Array);
                 tests_init_1.assert(value.length === 3);
                 tests_init_1.assert(value[0] instanceof Test);
@@ -80,9 +78,7 @@ describe('class EnTT', () => {
         });
         it('Casts Observable hashmap', () => {
             const instance = new Test(), observable = new rxjs_1.Subject(), value = instance.serialize();
-            observable
-                .pipe(__1.cast({ Test }))
-                .subscribe((value) => {
+            observable.pipe(__1.cast({ Test })).subscribe((value) => {
                 tests_init_1.assert(value instanceof Object);
                 tests_init_1.assert(Object.values(value).length === 3);
                 tests_init_1.assert(value.a instanceof Test);
@@ -94,8 +90,7 @@ describe('class EnTT', () => {
     describe('Casts Observables converted using .toPromise()', () => {
         it('Casts single Observable', () => {
             const instance = new Test(), observable = new rxjs_1.Subject(), value = instance.serialize();
-            Test.cast(observable.toPromise(), { into: Test })
-                .then((value) => {
+            Test.cast(observable.toPromise(), { into: Test }).then(value => {
                 tests_init_1.assert(value instanceof Test);
             });
             observable.next(value);
@@ -103,8 +98,7 @@ describe('class EnTT', () => {
         });
         it('Casts Observable array', () => {
             const instance = new Test(), observable = new rxjs_1.Subject(), value = instance.serialize();
-            Test.cast(observable.toPromise(), { into: [Test] })
-                .then((value) => {
+            Test.cast(observable.toPromise(), { into: [Test] }).then(value => {
                 tests_init_1.assert(value instanceof Array);
                 tests_init_1.assert(value.length === 3);
                 tests_init_1.assert(value[0] instanceof Test);
@@ -114,8 +108,7 @@ describe('class EnTT', () => {
         });
         it('Casts Observable hashmap', () => {
             const instance = new Test(), observable = new rxjs_1.Subject(), value = instance.serialize();
-            Test.cast(observable.toPromise(), { into: { Test } })
-                .then((value) => {
+            Test.cast(observable.toPromise(), { into: { Test } }).then(value => {
                 tests_init_1.assert(value instanceof Object);
                 tests_init_1.assert(Object.values(value).length === 3);
                 tests_init_1.assert(value.a instanceof Test);

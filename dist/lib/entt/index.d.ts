@@ -38,4 +38,4 @@ export declare class EnTT extends EnTTBase {
  * @param type Type of value being cast
  * @returns Observable about to resolve cast instance or structure
  */
-export declare function cast<T extends EnTT>(into: ((new () => T) | (new () => T)[] | Record<any, (new () => T)>), type?: import("@ofzza/entt/lib/decorators/serializable/internals")._rawDataType): <T_1>(value: Observable<T_1>) => any;
+export declare function cast<T extends EnTT>(into: (new () => T) | (new () => T)[] | Record<any, new () => T>, type?: import("@ofzza/entt/lib/decorators/serializable/internals")._rawDataType): <T_1>(value: Observable<T_1>) => any;

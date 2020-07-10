@@ -10,7 +10,6 @@ import { EnTT as EnTTBase } from '@ofzza/entt';
  * Main, extensible EnTT class definition
  */
 export class EnTT extends EnTTBase {
-
   /**
    * Casts a value of given type as an instance of a parent EnTT Class
    * @param value Value (or structure of values) being cast, or (alternatively) a Promise or Observable about to resolve such a value
@@ -24,14 +23,19 @@ export class EnTT extends EnTTBase {
    * @param type Type of value being cast
    * @returns Instance (or structure of instances) of the class with deserialized data, or (alternatively) a Promise or Observable about to resolve to such an instance
    */
-  public static cast (value, { into = undefined as ((new() => EnTT) | (new() => EnTT)[] | Record<any, (new() => EnTT)>), type = 'object' as 'object'|'json' } = {}) {
+  public static cast(
+    value,
+    { into = undefined as (new () => EnTT) | (new () => EnTT)[] | Record<any, new () => EnTT>, type = 'object' as 'object' | 'json' } = {},
+  ) {
     // using @Serializable
     // Check if value is an Observable
     if (value instanceof Observable) {
       // Pipe observable through a casting transformation
-      return value.pipe(map(value => {
-        return EnTTBase.cast.bind(this)(value, { into, type });
-      }));
+      return value.pipe(
+        map(value => {
+          return EnTTBase.cast.bind(this)(value, { into, type });
+        }),
+      );
     } else {
       // Cast value
       return EnTTBase.cast.bind(this)(value, { into, type });
@@ -41,8 +45,10 @@ export class EnTT extends EnTTBase {
   /**
    * Creates an extended instance of EnTT.
    */
-  constructor () { super(); super.entt(); }
-  
+  constructor() {
+    super();
+    super.entt();
+  }
 }
 
 /**
@@ -57,8 +63,8 @@ export class EnTT extends EnTTBase {
  * @param type Type of value being cast
  * @returns Observable about to resolve cast instance or structure
  */
-export function cast <T extends EnTT> (into: ((new() => T) | (new() => T)[] | Record<any, (new() => T)>), type = 'object' as 'object'|'json') {
-  return function <T> (value: Observable<T>) {
+export function cast<T extends EnTT>(into: (new () => T) | (new () => T)[] | Record<any, new () => T>, type = 'object' as 'object' | 'json') {
+  return function <T>(value: Observable<T>) {
     return EnTT.cast(value, { into, type });
   };
 }

@@ -40,7 +40,10 @@ class EnTT extends entt_1.EnTT {
     /**
      * Creates an extended instance of EnTT.
      */
-    constructor() { super(); super.entt(); }
+    constructor() {
+        super();
+        super.entt();
+    }
 }
 exports.EnTT = EnTT;
 /**
