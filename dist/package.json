@@ -1,11 +1,11 @@
 {
   "name": "@ofzza/entt-rxjs",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "description": "RxJS compatible extension of enTT - a modular JS data-model base class, implementing typically used functionality",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "prettier --write . && tsc",
     "dev": "tsc -w",
     "test": "tsc; npx jasmine --config=./jasmine.json"
   },
@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/ofzza/enTT-RxJS#readme",
   "dependencies": {
-    "@ofzza/entt": "^3.1.4",
+    "@ofzza/entt": "^3.1.5",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^6.5.4",
     "tslib": "^1.11.1"
@@ -49,6 +49,7 @@
     "jasmine": "^3.5.0",
     "jasmine-spec-reporter": "^4.2.1",
     "pre-commit": "^1.2.2",
+    "prettier": "2.0.5",
     "tslint": "^6.0.0",
     "typescript": "^3.8.3"
   }

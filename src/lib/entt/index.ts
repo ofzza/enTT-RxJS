@@ -39,7 +39,7 @@ export class EnTT extends EnTTBase {
       );
     } else {
       // Cast value
-      return EnTTBase.cast.bind(this)(value, { into, type });
+      return EnTTBase.cast.bind(this)(value, { into, type, validate });
     }
   }
 

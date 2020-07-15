@@ -35,7 +35,7 @@ class EnTT extends entt_1.EnTT {
         }
         else {
             // Cast value
-            return entt_1.EnTT.cast.bind(this)(value, { into, type });
+            return entt_1.EnTT.cast.bind(this)(value, { into, type, validate });
         }
     }
     /**
