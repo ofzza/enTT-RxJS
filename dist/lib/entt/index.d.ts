@@ -15,11 +15,13 @@ export declare class EnTT extends EnTTBase {
      * - {MyEnTTClass}, will cast value (assumed to be a hashmap) as a hashmap of instances of MyEnTTClass
      *    => { a: new myEnTTClass(), b: new myEnTTClass(), c: new myEnTTClass(), ... }
      * @param type Type of value being cast
+     * @param validate If cast instance should be validated after
      * @returns Instance (or structure of instances) of the class with deserialized data, or (alternatively) a Promise or Observable about to resolve to such an instance
      */
-    static cast(value: any, { into, type }?: {
+    static cast(value: any, { into, type, validate }?: {
         into?: (new () => EnTT) | (new () => EnTT)[] | Record<any, new () => EnTT>;
         type?: import("@ofzza/entt/lib/decorators/serializable/internals")._rawDataType;
+        validate?: boolean;
     }): any;
     /**
      * Creates an extended instance of EnTT.
@@ -36,6 +38,7 @@ export declare class EnTT extends EnTTBase {
  * - {MyEnTTClass}, will cast value (assumed to be a hashmap) as a hashmap of instances of MyEnTTClass
  *    => { a: new myEnTTClass(), b: new myEnTTClass(), c: new myEnTTClass(), ... }
  * @param type Type of value being cast
+ * @param validate If cast instance should be validated after
  * @returns Observable about to resolve cast instance or structure
  */
-export declare function cast<T extends EnTT>(into: (new () => T) | (new () => T)[] | Record<any, new () => T>, type?: import("@ofzza/entt/lib/decorators/serializable/internals")._rawDataType): <T_1>(value: Observable<T_1>) => any;
+export declare function cast<T extends EnTT>(into: (new () => T) | (new () => T)[] | Record<any, new () => T>, type?: import("@ofzza/entt/lib/decorators/serializable/internals")._rawDataType, validate?: boolean): <T_1>(value: Observable<T_1>) => any;

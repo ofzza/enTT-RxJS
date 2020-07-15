@@ -21,15 +21,16 @@ class EnTT extends entt_1.EnTT {
      * - {MyEnTTClass}, will cast value (assumed to be a hashmap) as a hashmap of instances of MyEnTTClass
      *    => { a: new myEnTTClass(), b: new myEnTTClass(), c: new myEnTTClass(), ... }
      * @param type Type of value being cast
+     * @param validate If cast instance should be validated after
      * @returns Instance (or structure of instances) of the class with deserialized data, or (alternatively) a Promise or Observable about to resolve to such an instance
      */
-    static cast(value, { into = undefined, type = 'object' } = {}) {
+    static cast(value, { into = undefined, type = 'object', validate = true } = {}) {
         // using @Serializable
         // Check if value is an Observable
         if (value instanceof rxjs_1.Observable) {
             // Pipe observable through a casting transformation
             return value.pipe(operators_1.map(value => {
-                return entt_1.EnTT.cast.bind(this)(value, { into, type });
+                return entt_1.EnTT.cast.bind(this)(value, { into, type, validate });
             }));
         }
         else {
@@ -56,11 +57,12 @@ exports.EnTT = EnTT;
  * - {MyEnTTClass}, will cast value (assumed to be a hashmap) as a hashmap of instances of MyEnTTClass
  *    => { a: new myEnTTClass(), b: new myEnTTClass(), c: new myEnTTClass(), ... }
  * @param type Type of value being cast
+ * @param validate If cast instance should be validated after
  * @returns Observable about to resolve cast instance or structure
  */
-function cast(into, type = 'object') {
+function cast(into, type = 'object', validate = true) {
     return function (value) {
-        return EnTT.cast(value, { into, type });
+        return EnTT.cast(value, { into, type, validate });
     };
 }
 exports.cast = cast;

@@ -21,11 +21,12 @@ export class EnTT extends EnTTBase {
    * - {MyEnTTClass}, will cast value (assumed to be a hashmap) as a hashmap of instances of MyEnTTClass
    *    => { a: new myEnTTClass(), b: new myEnTTClass(), c: new myEnTTClass(), ... }
    * @param type Type of value being cast
+   * @param validate If cast instance should be validated after
    * @returns Instance (or structure of instances) of the class with deserialized data, or (alternatively) a Promise or Observable about to resolve to such an instance
    */
   public static cast(
     value,
-    { into = undefined as (new () => EnTT) | (new () => EnTT)[] | Record<any, new () => EnTT>, type = 'object' as 'object' | 'json' } = {},
+    { into = undefined as (new () => EnTT) | (new () => EnTT)[] | Record<any, new () => EnTT>, type = 'object' as 'object' | 'json', validate = true } = {},
   ) {
     // using @Serializable
     // Check if value is an Observable
@@ -33,7 +34,7 @@ export class EnTT extends EnTTBase {
       // Pipe observable through a casting transformation
       return value.pipe(
         map(value => {
-          return EnTTBase.cast.bind(this)(value, { into, type });
+          return EnTTBase.cast.bind(this)(value, { into, type, validate });
         }),
       );
     } else {
@@ -61,10 +62,11 @@ export class EnTT extends EnTTBase {
  * - {MyEnTTClass}, will cast value (assumed to be a hashmap) as a hashmap of instances of MyEnTTClass
  *    => { a: new myEnTTClass(), b: new myEnTTClass(), c: new myEnTTClass(), ... }
  * @param type Type of value being cast
+ * @param validate If cast instance should be validated after
  * @returns Observable about to resolve cast instance or structure
  */
-export function cast<T extends EnTT>(into: (new () => T) | (new () => T)[] | Record<any, new () => T>, type = 'object' as 'object' | 'json') {
+export function cast<T extends EnTT>(into: (new () => T) | (new () => T)[] | Record<any, new () => T>, type = 'object' as 'object' | 'json', validate = true) {
   return function <T>(value: Observable<T>) {
-    return EnTT.cast(value, { into, type });
+    return EnTT.cast(value, { into, type, validate });
   };
 }
