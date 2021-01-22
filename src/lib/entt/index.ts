@@ -5,6 +5,7 @@
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EnTT as EnTTBase } from '@ofzza/entt';
+import { TNew, _rawDataType } from '@ofzza/entt';
 
 /**
  * Main, extensible EnTT class definition
@@ -22,12 +23,71 @@ export class EnTT extends EnTTBase {
    *    => { a: new myEnTTClass(), b: new myEnTTClass(), c: new myEnTTClass(), ... }
    * @param type Type of value being cast
    * @param validate If cast instance should be validated after
-   * @returns Instance (or structure of instances) of the class with deserialized data, or (alternatively) a Promise or Observable about to resolve to such an instance
+   * @returns Instance (or structure of instances) of the class with deserialized data, or (alternatively) a Promise or Observable about to resolve
+   * to such an instance
    */
-  public static cast(
-    value,
-    { into = undefined as (new () => EnTT) | (new () => EnTT)[] | Record<any, new () => EnTT>, type = 'object' as 'object' | 'json', validate = true } = {},
-  ) {
+  // OVERLOADS: Casting observables
+  // Observable<any> => Observable<EnTT>
+  public static cast<T>(this: TNew<T>, value: Observable<any>, params?: { into?: TNew<T>; type?: _rawDataType; validate?: boolean }): Observable<T>;
+  // Observable<any[]> => Observable<EnTT[]>
+  public static cast<T>(this: TNew<T>, value: Observable<any>, params?: { into?: TNew<T>[]; type?: _rawDataType; validate?: boolean }): Observable<T[]>;
+  // Observable<Record<any, any> => Observable<Record<any, EnTT>>
+  public static cast<T>(
+    this: TNew<T>,
+    value: Observable<any>,
+    params?: { into?: Record<any, TNew<T>>; type?: _rawDataType; validate?: boolean },
+  ): Observable<Record<any, T>>;
+  // Observable<any | any[] | Record<any, any> => Observable<EnTT | EnTT[] | Record<any, EnTT>
+  public static cast<T>(
+    this: TNew<T>,
+    value: Observable<any>,
+    params?: { into?: TNew<T> | TNew<T>[] | Record<any, TNew<T>>; type?: _rawDataType; validate?: boolean },
+  ): Observable<T | T[] | Record<any, T>>;
+  // OVERLOADS: Casting promises
+  // Promise<any> => Promise<EnTT>
+  public static cast<T>(this: TNew<T>, value: Promise<any>, params?: { into?: TNew<T>; type?: _rawDataType; validate?: boolean }): Promise<T>;
+  // Promise<any[]> => Promise<EnTT[]>
+  public static cast<T>(this: TNew<T>, value: Promise<any>, params?: { into?: TNew<T>[]; type?: _rawDataType; validate?: boolean }): Promise<T[]>;
+  // Promise<Record<any, any> => Promise<Record<any, EnTT>>
+  public static cast<T>(
+    this: TNew<T>,
+    value: Promise<any>,
+    params?: { into?: Record<any, TNew<T>>; type?: _rawDataType; validate?: boolean },
+  ): Promise<Record<any, T>>;
+  // Promise<any | any[] | Record<any, any> => Promise<EnTT | EnTT[] | Record<any, EnTT>
+  public static cast<T>(
+    this: TNew<T>,
+    value: Promise<any>,
+    params?: { into?: TNew<T> | TNew<T>[] | Record<any, TNew<T>>; type?: _rawDataType; validate?: boolean },
+  ): Promise<T | T[] | Record<any, T>>;
+  // OVERLOADS: Casting values
+  // any => EnTT
+  public static cast<T>(this: TNew<T>, value: any, params?: { into?: TNew<T>; type?: _rawDataType; validate?: boolean }): T;
+  // any[] => EnTT[]
+  public static cast<T>(this: TNew<T>, value: any, params?: { into?: TNew<T>[]; type?: _rawDataType; validate?: boolean }): T[];
+  // Record<any, any> => Record<any, EnTT>
+  public static cast<T>(this: TNew<T>, value: any, params?: { into?: Record<any, TNew<T>>; type?: _rawDataType; validate?: boolean }): Record<any, T>;
+  // any | any[] | Record<any, any> => EnTT | EnTT[] | Record<any, EnTT>
+  public static cast<T>(
+    this: TNew<T>,
+    value: any,
+    params?: { into?: TNew<T> | TNew<T>[] | Record<any, TNew<T>>; type?: _rawDataType; validate?: boolean },
+  ): T | T[] | Record<any, T>;
+  // OVERLOAD: Combined
+  // Observable<any | any[] | Record<any, any> => Observable<EnTT | EnTT[] | Record<any, EnTT>
+  // Promise<any | any[] | Record<any, any> => Promise<EnTT | EnTT[] | Record<any, EnTT>
+  // any | any[] | Record<any, any> => EnTT | EnTT[] | Record<any, EnTT>
+  public static cast<T>(
+    this: TNew<T>,
+    value: Observable<any> | Promise<any> | any,
+    params?: { into?: TNew<T> | TNew<T>[] | Record<any, TNew<T>>; type?: _rawDataType; validate?: boolean },
+  ): T | T[] | Record<any, T> | Promise<T | T[] | Record<any, T>> | Observable<T | T[] | Record<any, T>>;
+  // Implementation
+  public static cast<T>(
+    this: TNew<T>,
+    value: Observable<any> | Promise<any> | any,
+    { into = undefined as TNew<T> | TNew<T>[] | Record<any, TNew<T>>, type = 'object' as _rawDataType, validate = true } = {},
+  ): T | T[] | Record<any, T> | Promise<T | T[] | Record<any, T>> | Observable<T | T[] | Record<any, T>> {
     // using @Serializable
     // Check if value is an Observable
     if (value instanceof Observable) {
@@ -65,8 +125,9 @@ export class EnTT extends EnTTBase {
  * @param validate If cast instance should be validated after
  * @returns Observable about to resolve cast instance or structure
  */
-export function cast<T extends EnTT>(into: (new () => T) | (new () => T)[] | Record<any, new () => T>, type = 'object' as 'object' | 'json', validate = true) {
-  return function <T>(value: Observable<T>) {
+export function cast<T extends EnTT>(into: TNew<T> | TNew<T>[] | Record<any, TNew<T>>, type = 'object' as _rawDataType, validate = true) {
+  // tslint:disable-next-line: only-arrow-functions
+  return function (value: Observable<any>): Observable<EnTT | EnTT[] | Record<any, EnTT>> {
     return EnTT.cast(value, { into, type, validate });
   };
 }

@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
 import { EnTT as EnTTBase } from '@ofzza/entt';
+import { TNew, _rawDataType } from '@ofzza/entt';
 /**
  * Main, extensible EnTT class definition
  */
@@ -16,13 +17,74 @@ export declare class EnTT extends EnTTBase {
      *    => { a: new myEnTTClass(), b: new myEnTTClass(), c: new myEnTTClass(), ... }
      * @param type Type of value being cast
      * @param validate If cast instance should be validated after
-     * @returns Instance (or structure of instances) of the class with deserialized data, or (alternatively) a Promise or Observable about to resolve to such an instance
+     * @returns Instance (or structure of instances) of the class with deserialized data, or (alternatively) a Promise or Observable about to resolve
+     * to such an instance
      */
-    static cast(value: any, { into, type, validate }?: {
-        into?: (new () => EnTT) | (new () => EnTT)[] | Record<any, new () => EnTT>;
-        type?: import("@ofzza/entt/lib/decorators/serializable/internals")._rawDataType;
+    static cast<T>(this: TNew<T>, value: Observable<any>, params?: {
+        into?: TNew<T>;
+        type?: _rawDataType;
         validate?: boolean;
-    }): any;
+    }): Observable<T>;
+    static cast<T>(this: TNew<T>, value: Observable<any>, params?: {
+        into?: TNew<T>[];
+        type?: _rawDataType;
+        validate?: boolean;
+    }): Observable<T[]>;
+    static cast<T>(this: TNew<T>, value: Observable<any>, params?: {
+        into?: Record<any, TNew<T>>;
+        type?: _rawDataType;
+        validate?: boolean;
+    }): Observable<Record<any, T>>;
+    static cast<T>(this: TNew<T>, value: Observable<any>, params?: {
+        into?: TNew<T> | TNew<T>[] | Record<any, TNew<T>>;
+        type?: _rawDataType;
+        validate?: boolean;
+    }): Observable<T | T[] | Record<any, T>>;
+    static cast<T>(this: TNew<T>, value: Promise<any>, params?: {
+        into?: TNew<T>;
+        type?: _rawDataType;
+        validate?: boolean;
+    }): Promise<T>;
+    static cast<T>(this: TNew<T>, value: Promise<any>, params?: {
+        into?: TNew<T>[];
+        type?: _rawDataType;
+        validate?: boolean;
+    }): Promise<T[]>;
+    static cast<T>(this: TNew<T>, value: Promise<any>, params?: {
+        into?: Record<any, TNew<T>>;
+        type?: _rawDataType;
+        validate?: boolean;
+    }): Promise<Record<any, T>>;
+    static cast<T>(this: TNew<T>, value: Promise<any>, params?: {
+        into?: TNew<T> | TNew<T>[] | Record<any, TNew<T>>;
+        type?: _rawDataType;
+        validate?: boolean;
+    }): Promise<T | T[] | Record<any, T>>;
+    static cast<T>(this: TNew<T>, value: any, params?: {
+        into?: TNew<T>;
+        type?: _rawDataType;
+        validate?: boolean;
+    }): T;
+    static cast<T>(this: TNew<T>, value: any, params?: {
+        into?: TNew<T>[];
+        type?: _rawDataType;
+        validate?: boolean;
+    }): T[];
+    static cast<T>(this: TNew<T>, value: any, params?: {
+        into?: Record<any, TNew<T>>;
+        type?: _rawDataType;
+        validate?: boolean;
+    }): Record<any, T>;
+    static cast<T>(this: TNew<T>, value: any, params?: {
+        into?: TNew<T> | TNew<T>[] | Record<any, TNew<T>>;
+        type?: _rawDataType;
+        validate?: boolean;
+    }): T | T[] | Record<any, T>;
+    static cast<T>(this: TNew<T>, value: Observable<any> | Promise<any> | any, params?: {
+        into?: TNew<T> | TNew<T>[] | Record<any, TNew<T>>;
+        type?: _rawDataType;
+        validate?: boolean;
+    }): T | T[] | Record<any, T> | Promise<T | T[] | Record<any, T>> | Observable<T | T[] | Record<any, T>>;
     /**
      * Creates an extended instance of EnTT.
      */
@@ -41,4 +103,4 @@ export declare class EnTT extends EnTTBase {
  * @param validate If cast instance should be validated after
  * @returns Observable about to resolve cast instance or structure
  */
-export declare function cast<T extends EnTT>(into: (new () => T) | (new () => T)[] | Record<any, new () => T>, type?: import("@ofzza/entt/lib/decorators/serializable/internals")._rawDataType, validate?: boolean): <T_1>(value: Observable<T_1>) => any;
+export declare function cast<T extends EnTT>(into: TNew<T> | TNew<T>[] | Record<any, TNew<T>>, type?: _rawDataType, validate?: boolean): (value: Observable<any>) => Observable<EnTT | EnTT[] | Record<any, EnTT>>;
