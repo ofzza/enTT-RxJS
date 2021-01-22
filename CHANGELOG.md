@@ -1,3 +1,7 @@
+### Version 3.1.8
+
+...
+
 ### Version 3.1.7
 
 - Updated `rxjs` to version 6.6.0
