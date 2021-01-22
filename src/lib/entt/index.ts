@@ -89,7 +89,7 @@ export class EnTT extends EnTTBase {
     { into = undefined as TNew<T> | TNew<T>[] | Record<any, TNew<T>>, type = 'object' as _rawDataType, validate = true } = {},
   ): T | T[] | Record<any, T> | Promise<T | T[] | Record<any, T>> | Observable<T | T[] | Record<any, T>> {
     // using @Serializable
-    // Check if value is an Observable
+    // Return observable of cast, resolved value
     if (value instanceof Observable) {
       // Pipe observable through a casting transformation
       return value.pipe(
@@ -97,8 +97,9 @@ export class EnTT extends EnTTBase {
           return EnTTBase.cast.bind(this)(value, { into, type, validate });
         }),
       );
-    } else {
-      // Cast value
+    }
+    // Cast value using base EnTT class
+    else {
       return EnTTBase.cast.bind(this)(value, { into, type, validate });
     }
   }
