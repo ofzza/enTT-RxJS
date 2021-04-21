@@ -35,6 +35,12 @@ describe('class EnTT', () => {
       const instance = new Test(),
         observable = new Subject(),
         value = instance.serialize();
+      Test.cast(observable).subscribe(value => {
+        assert(value instanceof Test);
+      });
+      EnTT.cast(observable, { into: Test }).subscribe(value => {
+        assert(value instanceof Test);
+      });
       Test.cast(observable, { into: Test }).subscribe(value => {
         assert(value instanceof Test);
       });
@@ -51,6 +57,11 @@ describe('class EnTT', () => {
         assert(value.length === 3);
         assert(value[0] instanceof Test);
       });
+      EnTT.cast(observable, { into: [Test] }).subscribe(value => {
+        assert(value instanceof Array);
+        assert(value.length === 3);
+        assert(value[0] instanceof Test);
+      });
       observable.next([value, value, value]);
       observable.complete();
     });
@@ -60,6 +71,11 @@ describe('class EnTT', () => {
         observable = new Subject(),
         value = instance.serialize();
       Test.cast(observable, { into: { Test } }).subscribe(value => {
+        assert(value instanceof Object);
+        assert(Object.values(value).length === 3);
+        assert(value.a instanceof Test);
+      });
+      EnTT.cast(observable, { into: { Test } }).subscribe(value => {
         assert(value instanceof Object);
         assert(Object.values(value).length === 3);
         assert(value.a instanceof Test);
@@ -85,7 +101,7 @@ describe('class EnTT', () => {
       const instance = new Test(),
         observable = new Subject(),
         value = instance.serialize();
-      observable.pipe(cast([Test])).subscribe((value: any) => {
+      observable.pipe(cast([Test])).subscribe(value => {
         assert(value instanceof Array);
         assert(value.length === 3);
         assert(value[0] instanceof Test);
@@ -98,7 +114,7 @@ describe('class EnTT', () => {
       const instance = new Test(),
         observable = new Subject(),
         value = instance.serialize();
-      observable.pipe(cast({ Test })).subscribe((value: any) => {
+      observable.pipe(cast({ Test })).subscribe(value => {
         assert(value instanceof Object);
         assert(Object.values(value).length === 3);
         assert(value.a instanceof Test);
