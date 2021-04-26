@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/ofzza/enTT-RxJS#readme",
   "dependencies": {
-    "@ofzza/entt": "^3.2.0",
+    "@ofzza/entt": "^3.2.1",
     "rxjs": "^6.6.0"
   },
   "devDependencies": {

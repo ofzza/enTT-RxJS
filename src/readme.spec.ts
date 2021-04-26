@@ -2,7 +2,7 @@
 // ----------------------------------------------------------------------------
 
 // Import dependencies
-import { Subject } from 'rxjs';
+import { Subject, PartialObserver } from 'rxjs';
 import { assert } from './tests.init';
 import { EnTT, cast } from './';
 
