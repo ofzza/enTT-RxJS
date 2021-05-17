@@ -1,4 +1,13 @@
-### Version 3.2.1
+### Version 3.2.2
+
+- Updated typescript version to `4.2.4`
+- Updated yup version to `0.32.9`
+- Updated rxjs version to `6.6.6`
+- `@Property` custom getter/setter callback's second argument is now optional: `(value: any, obj?: any) => any`
+- `@Serializable` custom serialize/deserialize callback's second argument is now optional: `(value: any, obj?: any) => any`
+- `@Validate` custom provider validation function's second argument is now optional: `(value: any, obj?: any) => Error[] | Error | string | boolean`
+
+clear; np### Version 3.2.1
 
 - Fix making sure EnTT.cast() type definition is correct when base type and 'into' argument types aren't the same
 - Fix making .deserialize() return type definition pick up parent class being called from
