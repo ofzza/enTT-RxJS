@@ -1,5 +1,6 @@
 ### Version 3.2.2
 
+- Now allowing alternative (factory pattern) declaration of `@Serializable({ cast })` argument, to help mitigate circular dependency problems when using nested models: `@Serializable({ cast: () => MyEnTTClass })`
 - Updated typescript version to `4.2.4`
 - Updated yup version to `0.32.9`
 - Updated rxjs version to `6.6.6`
