@@ -2,7 +2,7 @@
 // ----------------------------------------------------------------------------
 
 // Import dependencies
-import { Observable, MonoTypeOperatorFunction, pipe } from 'rxjs';
+import { Observable, OperatorFunction, pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { EnTT as EnTTBase } from '@ofzza/entt';
 import { TNew, _rawDataType } from '@ofzza/entt';
@@ -164,14 +164,14 @@ export class EnTT extends EnTTBase {
  * @param validate If cast instance should be validated after
  * @returns Observable about to resolve cast instance or structure
  */
-export function cast<T>(into: TNew<T>, type?: _rawDataType, validate?: boolean): MonoTypeOperatorFunction<T>;
-export function cast<T>(into: TNew<T>[], type?: _rawDataType, validate?: boolean): MonoTypeOperatorFunction<T[]>;
-export function cast<T>(into: Record<any, TNew<T>>, type?: _rawDataType, validate?: boolean): MonoTypeOperatorFunction<Record<any, T>>;
+export function cast<T>(into: TNew<T>, type?: _rawDataType, validate?: boolean): OperatorFunction<any, T>;
+export function cast<T>(into: TNew<T>[], type?: _rawDataType, validate?: boolean): OperatorFunction<any[], T[]>;
+export function cast<T>(into: Record<any, TNew<T>>, type?: _rawDataType, validate?: boolean): OperatorFunction<Record<any, any>, Record<any, T>>;
 export function cast<T>(
   into: TNew<T> | TNew<T>[] | Record<any, TNew<T>>,
   type = 'object' as _rawDataType,
   validate = true,
-): MonoTypeOperatorFunction<T | T[] | Record<any, T>> {
+): OperatorFunction<any | any[] | Record<any, T>, T | T[] | Record<any, T>> {
   // tslint:disable-next-line: only-arrow-functions
   return pipe(map(value => EnTT.cast(value, { into, type, validate }) as T | T[] | Record<any, T>));
 }

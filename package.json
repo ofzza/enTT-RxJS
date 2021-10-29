@@ -1,6 +1,6 @@
 {
   "name": "@ofzza/entt-rxjs",
-  "version": "3.2.5",
+  "version": "3.2.6",
   "description": "RxJS compatible extension of enTT - a modular TypeScript data-modeling solution",
   "main": "./dist/index.js",
   "types": "dist/index.d.ts",
@@ -39,7 +39,7 @@
   },
   "homepage": "https://github.com/ofzza/enTT-RxJS#readme",
   "dependencies": {
-    "@ofzza/entt": "^3.2.5",
+    "@ofzza/entt": "^3.2.6",
     "rxjs": "^6.6.6"
   },
   "devDependencies": {

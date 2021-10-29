@@ -1,3 +1,7 @@
+### Version 3.2.6
+
+- Fixed `cast()` RxJs operator to extend OperatorFunction instead of MonoTypeOperatorFunction
+
 ### Version 3.2.5
 
 - Fixed issue with cloning nested EnTT instances where properties marked with `serialize: false` or `deserialize: false` were not being cloned directly
