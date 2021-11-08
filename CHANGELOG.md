@@ -1,3 +1,7 @@
+### Version 3.2.7
+
+- Fixed RxJS dependency version so as to work with both 6.x and 7.x versions
+
 ### Version 3.2.6
 
 - Fixed `cast()` RxJs operator to extend OperatorFunction instead of MonoTypeOperatorFunction
